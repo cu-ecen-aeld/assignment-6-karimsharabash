@@ -1,0 +1,16 @@
+#!/bin/sh
+
+case $1 in
+	start)
+		cp /lib/modules/`uname -r`/aesdchar.ko /
+		start-stop-daemon -S -n aesdcharStart -a /bin/aesdchar_load
+		;;
+	stop)
+		start-stop-daemon -K -n aesdcharStart
+		start-stop-daemon -S -n aesdcharStop -a /bin/aesdchar_unload
+		;;
+	*)
+		echo "Usage is {start|stop}"
+	exit 1
+esac
+exit 0
